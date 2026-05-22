@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Семейный бюджет — простой калькулятор доходов и расходов для планирования семейных финансов." />
+  <title>Семейный бюджет — планируйте финансы вместе</title>
+
+  <!-- Сохранённая тема до отрисовки страницы -->
+  <script>
+    (function () {
+      if (localStorage.getItem("budget-theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+  <!-- Шапка с навигацией -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-logo" href="index.html">Семейный бюджет</a>
+      <nav class="site-nav" aria-label="Основное меню">
+        <a href="index.html" class="is-active">Главная</a>
+        <a href="calculator.html">Калькулятор</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <!-- Приветственный блок -->
+    <section class="landing-hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Добро пожаловать в «Семейный бюджет»</h1>
+      <p>
+        Удобный помощник для семьи: соберите доходы и расходы в одном месте,
+        увидьте остаток и получите простую подсказку — куда двигаться дальше с финансами.
+      </p>
+      <a class="btn btn-primary" href="calculator.html">Открыть калькулятор</a>
+      <a class="btn btn-outline" href="#features">Узнать возможности</a>
+    </section>
+
+    <!-- Кратко о возможностях -->
+    <section class="landing-features" id="features" aria-labelledby="features-title">
+      <h2 id="features-title" class="visually-hidden">Возможности</h2>
+
+      <article class="feature-card">
+        <div class="feature-card__icon" aria-hidden="true">&#128200;</div>
+        <h2>Наглядный расчёт</h2>
+        <p>Доходы, обязательные и повседневные траты — всё в одной форме с итогами и долей расходов.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-card__icon" aria-hidden="true">&#128161;</div>
+        <h2>Подсказки по бюджету</h2>
+        <p>После расчёта сайт подскажет, комфортен ли баланс и стоит ли пересмотреть траты.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-card__icon" aria-hidden="true">&#127760;</div>
+        <h2>Работает в браузере</h2>
+        <p>Без регистрации и установки. Данные остаются на вашем устройстве, тема запоминается.</p>
+      </article>
+    </section>
+
+    <!-- Как начать -->
+    <section class="landing-steps" aria-labelledby="steps-title">
+      <h2 id="steps-title">Как начать за три шага</h2>
+      <ol>
+        <li>Откройте калькулятор и заполните поля, которые относятся к вашей семье.</li>
+        <li>Нажмите «Рассчитать бюджет» — пустые поля считаются нулём.</li>
+        <li>Изучите остаток, процент расходов и рекомендацию в блоке результата.</li>
+      </ol>
+    </section>
+
+    <section class="landing-cta">
+      <p>Готовы спланировать месяц? Переходите к калькулятору.</p>
+      <a class="btn btn-primary" href="calculator.html">Перейти к калькулятору</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Семейный бюджет · учебный проект · 2026</p>
+  </footer>
+
+  <!-- Переключатель темы -->
+  <button
+    type="button"
+    class="theme-toggle"
+    id="themeToggle"
+    aria-label="Включить тёмную тему"
+    title="Светлая / тёмная тема"
+  ><span class="theme-icon" aria-hidden="true">&#9790;</span></button>
+
+  <script src="js/theme.js"></script>
+</body>
+</html>
