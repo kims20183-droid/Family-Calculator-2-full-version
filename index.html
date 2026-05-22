@@ -6,7 +6,7 @@
   <meta name="description" content="Семейный бюджет — простой калькулятор доходов и расходов для планирования семейных финансов." />
   <title>Семейный бюджет — планируйте финансы вместе</title>
 
-  <!-- Сохранённая тема до отрисовки страницы -->
+  <!-- Сохранённая тема применяется до отрисовки (без мигания экрана) -->
   <script>
     (function () {
       if (localStorage.getItem("budget-theme") === "dark") {
@@ -17,15 +17,54 @@
 
   <link rel="stylesheet" href="css/common.css" />
   <link rel="stylesheet" href="css/landing.css" />
+
+  <!-- Стили кнопки темы в шапке (только для главной страницы) -->
+  <style>
+    .header-theme-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .header-theme-btn:hover {
+      border-color: var(--btn-primary);
+      color: var(--btn-primary);
+    }
+
+    .header-theme-btn .theme-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+  </style>
 </head>
 <body>
-  <!-- Шапка с навигацией -->
+  <!-- Шапка с навигацией и переключателем темы -->
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-logo" href="index.html">Семейный бюджет</a>
       <nav class="site-nav" aria-label="Основное меню">
         <a href="index.html" class="is-active">Главная</a>
         <a href="calculator.html">Калькулятор</a>
+        <!-- Кнопка светлой / тёмной темы в меню -->
+        <button
+          type="button"
+          class="header-theme-btn"
+          id="themeToggleHeader"
+          aria-label="Включить тёмную тему"
+          title="Светлая / тёмная тема"
+        >
+          <span class="theme-icon" aria-hidden="true">&#9790;</span>
+          <span class="theme-label">Тёмная</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -85,7 +124,7 @@
     <p>Семейный бюджет · учебный проект · 2026</p>
   </footer>
 
-  <!-- Переключатель темы -->
+  <!-- Переключатель темы — круглая кнопка в правом нижнем углу -->
   <button
     type="button"
     class="theme-toggle"
@@ -94,6 +133,60 @@
     title="Светлая / тёмная тема"
   ><span class="theme-icon" aria-hidden="true">&#9790;</span></button>
 
-  <script src="js/theme.js"></script>
+  <script>
+    /*
+      Переключение светлой и тёмной темы на главной странице.
+      Работают две кнопки: в шапке и в правом нижнем углу.
+      Выбор сохраняется в localStorage (ключ "budget-theme") —
+      та же тема подхватится на странице калькулятора.
+    */
+    (function initThemeOnLanding() {
+      var root = document.documentElement;
+      var btnCorner = document.getElementById("themeToggle");
+      var btnHeader = document.getElementById("themeToggleHeader");
+
+      function updateButtons(isDark) {
+        var moon = "&#9790;";
+        var sun = "&#9728;";
+        var labelDark = "Тёмная";
+        var labelLight = "Светлая";
+        var ariaDark = "Включить тёмную тему";
+        var ariaLight = "Включить светлую тему";
+
+        if (btnCorner) {
+          var iconCorner = btnCorner.querySelector(".theme-icon");
+          if (iconCorner) iconCorner.innerHTML = isDark ? sun : moon;
+          btnCorner.setAttribute("aria-label", isDark ? ariaLight : ariaDark);
+        }
+
+        if (btnHeader) {
+          var iconHeader = btnHeader.querySelector(".theme-icon");
+          var labelEl = btnHeader.querySelector(".theme-label");
+          if (iconHeader) iconHeader.innerHTML = isDark ? sun : moon;
+          if (labelEl) labelEl.textContent = isDark ? labelLight : labelDark;
+          btnHeader.setAttribute("aria-label", isDark ? ariaLight : ariaDark);
+        }
+      }
+
+      function applyTheme(isDark) {
+        if (isDark) {
+          root.setAttribute("data-theme", "dark");
+        } else {
+          root.removeAttribute("data-theme");
+        }
+        localStorage.setItem("budget-theme", isDark ? "dark" : "light");
+        updateButtons(isDark);
+      }
+
+      function toggleTheme() {
+        applyTheme(root.getAttribute("data-theme") !== "dark");
+      }
+
+      applyTheme(root.getAttribute("data-theme") === "dark");
+
+      if (btnCorner) btnCorner.addEventListener("click", toggleTheme);
+      if (btnHeader) btnHeader.addEventListener("click", toggleTheme);
+    })();
+  </script>
 </body>
 </html>
